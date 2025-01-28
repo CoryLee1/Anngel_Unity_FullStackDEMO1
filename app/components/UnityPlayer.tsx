@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
 
 const UnityPlayer = () => {
@@ -11,10 +11,30 @@ const UnityPlayer = () => {
     codeUrl: "/unity/Build/WebGLBuild.wasm",
   });
 
+  const [size, setSize] = useState({ width: window.innerWidth, height: window.innerHeight });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      {!isLoaded && <p>Loading... {Math.round(loadingProgression * 100)}%</p>}
-      <Unity unityProvider={unityProvider} className="w-full h-[600px]" />
+    <div className="w-full h-screen flex justify-center items-center">
+      {!isLoaded && (
+        <p className="absolute top-0 left-0 right-0 text-center text-white">
+          Loading... {Math.round(loadingProgression * 100)}%
+        </p>
+      )}
+      <Unity
+        unityProvider={unityProvider}
+        style={{
+          width: `${size.width}px`,
+          height: `${size.height}px`,
+        }}
+      />
     </div>
   );
 };
