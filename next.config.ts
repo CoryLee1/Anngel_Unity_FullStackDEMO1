@@ -11,22 +11,20 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true, // 让 Unity WebGL 资源以原始方式加载
   },
-
-  // ✅ 允许跨域访问 WebGL 资源（CORS 头）
   async headers() {
     return [
       {
-        source: '/unity/Build/:path*', // WebGL 资源路径
+        source: '/unity/Build/:path*',
         headers: [
-          { key: 'Access-Control-Allow-Origin', value: '*' }, // 允许跨域
-          { key: 'Content-Type', value: 'application/javascript' }, // 确保 JS 正确加载
+          { key: 'Access-Control-Allow-Origin', value: '*' },
+          { key: 'Content-Type', value: 'application/javascript' },
         ],
       },
     ];
   },
 
   // ✅ 如果你要静态导出（只使用 `getStaticProps`）
-  output: 'export', // 🔥 如果你需要 SSR，请去掉这行
+  //output: 'export', // 🔥 如果你需要 SSR，请去掉这行
 };
 
 export default nextConfig;

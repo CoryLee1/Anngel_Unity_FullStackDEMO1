@@ -1,0 +1,12 @@
+{
+    "headers": [
+      {
+        "source": "/unity/Build/:path*",
+        "headers": [
+          { "key": "Access-Control-Allow-Origin", "value": "*" },
+          { "key": "Content-Type", "value": "application/javascript" }
+        ]
+      }
+    ]
+  }
+  

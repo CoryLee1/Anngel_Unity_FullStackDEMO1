@@ -11,14 +11,20 @@ const UnityPlayer = () => {
     codeUrl: "/unity/Build/WebGLBuild.wasm",
   });
 
-  const [size, setSize] = useState({ width: window.innerWidth, height: window.innerHeight });
+  // 🚀 修正 window is not defined
+  const [size, setSize] = useState<{ width: number; height: number }>({ width: 800, height: 600 });
 
   useEffect(() => {
-    const handleResize = () => {
+    if (typeof window !== "undefined") { // ✅ 只在客户端执行
       setSize({ width: window.innerWidth, height: window.innerHeight });
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+
+      const handleResize = () => {
+        setSize({ width: window.innerWidth, height: window.innerHeight });
+      };
+
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
   }, []);
 
   return (
