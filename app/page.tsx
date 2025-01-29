@@ -1,7 +1,4 @@
-import Image from "next/image";
 import UnityPlayer from "./components/UnityPlayer";
-
-
 
 export default function Home() {
   return (
